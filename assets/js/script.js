@@ -2,6 +2,8 @@
 const generateBtn = document.querySelector("#generate");
 const switchEl = document.querySelector("#toggle");
 const hackyEls = document.querySelectorAll(".hack-mode");
+const labelEl = document.querySelector("#redPill");
+const toggleSwitchColor = document.querySelector(".slider");
 // all selectable characters are stored in four different arrays
 const lowerCaseArray = [
   "a",
@@ -337,8 +339,16 @@ switchEl.addEventListener("click", function () {
   for (let i = 0; i < hackyEls.length; i++) {
     if (hackyEls[i].classList.contains("hacky")) {
       hackyEls[i].classList.remove("hacky");
+      generateBtn.innerHTML = "Generate Password";
+      labelEl.innerHTML =
+        "You take the red pill, you stay in wonderland, and I show you how deep the rabbit hole goes.";
+      toggleSwitchColor.setAttribute("style", "background-color:red;");
     } else {
       hackyEls[i].classList.add("hacky");
+      generateBtn.innerHTML = "INITIALIZE";
+      labelEl.innerHTML =
+        "You take the blue pill, the story ends, you wake up in your bed and believe whatever you want to believe.";
+      toggleSwitchColor.setAttribute("style", "background-color: blue;");
     }
   }
 });
