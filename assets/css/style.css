@@ -231,6 +231,7 @@ textarea.hacky.password {
   border: 0px;
   text-align: left;
   background-color: transparent;
+  word-break: break-all;
 }
 .btn.hacky{
   background-color:black;
