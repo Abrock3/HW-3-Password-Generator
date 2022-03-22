@@ -45,6 +45,11 @@ The HTML, CSS, and a minimal amount of the javascript were provided by Trey Ecke
 
 I used W3 schools a bit to learn about parsing data, scope, and using variables as arguments.
 
+I used https://www.w3schools.com/howto/howto_css_switch.asp to create a toggle switch.
+
+I used this post and its comments to help me through how to loop a setInterval: https://stackoverflow.com/questions/18994891/javascript-setinterval-not-executing-inside-do-while-loop-for-each-iteration
+
+I used this post to assist me with styling the "hacker-style" formatting: https://css-tricks.com/old-timey-terminal-styling/
 ## License
 
 I cannot add a license to this content, as the HTML code, CSS, and a minimal amount of the Javascript were provided to me by my bootcamp instructors.

@@ -191,11 +191,7 @@ body.hacky {
 header.hacky {
 display:none;
 }
-.wrapper.hacky {
-padding: 10px;
-  margin: 10px;
-  border: solid #03A062 2px;
-}
+
 .hacky.card {
   float:left;
   background-color: transparent;
@@ -206,14 +202,20 @@ padding: 10px;
 font: 1.3rem Inconsolata, monospace;
   color: white;
 background-color: none;
+text-shadow: 0 0 5px #C8C8C8;
 }
+
 .wrapper.hacky {
+  padding: 10px;
+  margin: 10px;
+  border: solid #03A062 2px;
 height: 96vh;
   background-image: radial-gradient(
     rgba(0, 150, 0, 0.75), black 120%
   );
 
 }
+
 h2.hide {
   display:none;
 }
@@ -236,9 +238,31 @@ textarea.hacky.password {
   background-color: transparent;
   word-break: break-all;
 }
+.hacky::selection {
+  background: #0080FF;
+  text-shadow: none;
+}
 .btn.hacky{
   background-color:black;
   color: white;
+}
+.hacky.wrapper:before {
+    content: " ";
+    display: block;
+    position: absolute;
+    top: 0;
+    left: 0;
+    bottom: 0;
+    right: 0;
+    background: linear-gradient(
+        to bottom,
+        rgba(18, 16, 16, 0) 50%,
+        rgba(0, 0, 0, 0.25) 50%
+    );
+    background-size: 100% 8px;
+    z-index: 2;
+    pointer-events: none;
+    opacity:50%;
 }
 @media (max-width: 690px) {
   .btn {
