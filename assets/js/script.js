@@ -1,5 +1,7 @@
-// stores button element location in a letiable to be referenced later
+// stores button and switch element locations in a const to be referenced later
 const generateBtn = document.querySelector("#generate");
+const switchEl = document.querySelector("#toggle");
+const hackyEls = document.querySelectorAll(".hack-mode");
 // all selectable characters are stored in four different arrays
 const lowerCaseArray = [
   "a",
@@ -100,18 +102,76 @@ let upperCaseInclude = false;
 let numbersInclude = false;
 let specialCharInclude = false;
 let passwordLength = 0;
+let passwordHackerEffect = [];
 
-// Write password to the #password input
+// Write password to the .password input
 function writePassword() {
   const password = generatePassword();
-  // stores textarea location in a letiable to be referenced and modified
-  const passwordText = document.querySelector("#password");
+  passwordHackerEffect = [];
+  for (let i = 0; i < passwordLength; i++) {
+    passwordHackerEffect.push(0);
+  }
+  let currentIndex = 0;
+  let randMilliseconds = 0;
+  let iterations = 0;
+  // stores textarea location in a const to be referenced and modified
+  const passwordText = document.querySelector(".password");
   if (password !== undefined) {
-    passwordText.value = password;
+    // This if decided whether to proceed with hacker-style generation of the password, or standard, boring generation
+    if (switchEl.checked === true) {
+      // This function uses a callback to loop on itself to create the effect of the computer guessing random characters; I wished to use a loop but it appears you can't do so with a setInterval
+      function hackerEffect(callback) {
+        iterations = 0;
+        // this math expression takes passwordLength into account to make sure that this effect doesn't take too long to carry out at high password lengths
+        // in addition, the interval length shortens as currentIndex increases, which makes the password appear to "solve" faster as it goes along
+        randMilliseconds =
+          Math.floor(
+            Math.random() * 10000 * Math.log(passwordLength) +
+              0.5 * Math.log(passwordLength)
+          ) /
+          passwordLength /
+          (((passwordLength + currentIndex * 4) * 0.5) / passwordLength);
+        iterations = 0;
+        let interval = setInterval(function () {
+          iterations++;
+          // this produces the effect of a setInterval nested within a setInterval, with one looping at 20 ms and the other looping at an interval of randMilliseconds
+          if (iterations * 20 >= randMilliseconds) {
+            // currentIndex is the index position that is currently getting modified
+            //  after randMilliseconds has passed iterations will increment and the callback function will restart the function assuming the password isn't complete
+            passwordHackerEffect[currentIndex] = password[currentIndex];
+            passwordText.value = passwordHackerEffect.join("");
+            currentIndex++;
+            clearInterval(interval);
+            callback();
+          } else {
+            // creates the effect of a random character appearing at the currentIndex at an interval of 20 milliseconds
+            passwordHackerEffect[currentIndex] =
+              selectedCharsArray[
+                Math.floor(Math.random() * selectedCharsArray.length)
+              ];
+            passwordText.value = passwordHackerEffect.join("");
+          }
+        }, 20);
+      }
+      // This function will loop back into hackerEffect using cbTarget as a callback function if the password isn't complete yet
+      cbTarget();
+      function cbTarget() {
+        if (passwordHackerEffect.join("") !== password.join("")) {
+          hackerEffect(cbTarget);
+        } else {
+          passwordText.value = password.join("");
+          window.alert("ACCESS GRANTED...TO A SECURE PASSWORD");
+          return;
+        }
+      }
+      // This is the else that displays the password instantly if the hacker-style switch is not selected
+    } else {
+      passwordText.value = password.join("");
+    }
   }
 }
 
-// This function gets called by writePassword(), it contains calls to several other functions which, together, create a valid password
+// This function gets called by writePassword(), it contains calls to several other functions, which together create a valid password
 function generatePassword() {
   askLength();
   if (passwordLength === null) {
@@ -119,12 +179,13 @@ function generatePassword() {
   }
   askParameters();
   generateCharsArray();
-  let passwordValidated = generateValidatedPassword();
+  const passwordValidated = generateValidatedPassword();
 
   // This will join all the characters in passwordValidatedinto a string, and returns it to the writePassword() function, which called the generatePassword() function
-  return passwordValidated.join("");
+  return passwordValidated;
 }
-  // this function stores the response to a prompt to var passwordLength and validates it; and quits if they hit cancel
+
+// this function stores the response to a prompt to var passwordLength and loops back to the start if it doesn't meet our criteria, and quits if they hit cancel
 function askLength() {
   passwordLength = window.prompt(
     "How many characters long would you like your password to be?"
@@ -244,7 +305,6 @@ function generateValidatedPassword() {
       for (let i = 0; i < passwordTentative.length; i++) {
         if (xInclude) {
           if (xArray.includes(passwordTentative[i])) {
-            console.log(xArray);
             return true;
           }
         }
@@ -267,9 +327,18 @@ function generateValidatedPassword() {
     !(numbersConfirmed === numbersInclude) ||
     !(specialCharConfirmed === specialCharInclude)
   );
-  // passes the value of the validated password back to the generatePassword() function
+  // returns the value of the validated password back to the generatePassword() function
   return passwordTentative;
 }
 
-// Add event listener to generate button
+// Add event listener to generate button and switch
 generateBtn.addEventListener("click", writePassword);
+switchEl.addEventListener("click", function () {
+  for (let i = 0; i < hackyEls.length; i++) {
+    if (hackyEls[i].classList.contains("hacky")) {
+      hackyEls[i].classList.remove("hacky");
+    } else {
+      hackyEls[i].classList.add("hacky");
+    }
+  }
+});

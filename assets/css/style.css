@@ -97,7 +97,7 @@ button[disabled] {
   float: right;
 }
 
-#password {
+.password {
   -webkit-appearance: none;
   -moz-appearance: none;
   appearance: none;
@@ -118,6 +118,124 @@ button[disabled] {
   overflow: hidden;
 }
 
+
+.switch {
+  position: relative;
+  display: inline-block;
+  width: 60px;
+  height: 34px;
+}
+
+
+.switch input {
+  opacity: 0;
+  width: 0;
+  height: 0;
+}
+
+
+.slider {
+  position: absolute;
+  cursor: pointer;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-color: #ccc;
+  -webkit-transition: .4s;
+  transition: .4s;
+}
+
+.slider:before {
+  position: absolute;
+  content: "";
+  height: 26px;
+  width: 26px;
+  left: 4px;
+  bottom: 4px;
+  background-color: white;
+  -webkit-transition: .4s;
+  transition: .4s;
+}
+
+input:checked + .slider {
+  background-color: #2196F3;
+}
+
+input:focus + .slider {
+  box-shadow: 0 0 1px #2196F3;
+}
+
+input:checked + .slider:before {
+  -webkit-transform: translateX(26px);
+  -ms-transform: translateX(26px);
+  transform: translateX(26px);
+}
+
+
+.slider.round {
+  border-radius: 34px;
+}
+
+.slider.round:before {
+  border-radius: 50%;
+}
+body.hacky {
+  background-image: radial-gradient(
+    rgba(0, 150, 0, 0.75), black 120%
+  );
+}
+header.hacky {
+display:none;
+}
+.wrapper.hacky {
+padding: 10px;
+  margin: 10px;
+  border: solid #03A062 2px;
+}
+.hacky.card {
+  float:left;
+  background-color: transparent;
+  box-shadow:none;
+}
+
+.hacky{
+font: 1.3rem Inconsolata, monospace;
+  color: white;
+background-color: none;
+}
+.wrapper.hacky {
+
+  background-image: radial-gradient(
+    rgba(0, 150, 0, 0.75), black 120%
+  );
+
+}
+h2.hide {
+  display:none;
+}
+
+h2.hacky {
+  display:inherit
+}
+h2.hacky.normie {
+  display:none;
+}
+h1.hacky {
+  display:none;
+}
+.card-header.hacky::after, .card-footer.hacky::before{
+  display:none;
+}
+textarea.hacky.password {
+  border: 0px;
+  text-align: left;
+  background-color: transparent;
+}
+.btn.hacky{
+  background-color:black;
+  color: white;
+}
 @media (max-width: 690px) {
   .btn {
     font-size: 1rem;
@@ -125,7 +243,7 @@ button[disabled] {
     padding: 10px 15px;
   }
 
-  #password {
+  .password {
     font-size: 1rem;
   }
 }

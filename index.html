@@ -7,25 +7,31 @@
     <title>Password Generator</title>
     <link rel="stylesheet" href="./assets/css/style.css" />
   </head>
-  <body>
-    <div class="wrapper">
-      <header>
-        <h1>Password Generator</h1>
+  <body class="hack-mode">
+    <div class="wrapper hack-mode">
+      <header class="hack-mode">
+        <h1 class="hack-mode">Password Generator</h1>
       </header>
-      <div class="card">
-        <div class="card-header">
-          <h2>Generate a Password</h2>
+      <div class="card hack-mode ">
+        <div class="card-header hack-mode">
+          <h2  class="hack-mode normie">Generate a Password</h2>
+          <h2 class = "hack-mode hide">HACKING THE MAINFRAME...</h2>
         </div>
-        <div class="card-body">
-          <textarea
+        <div class="card-body hack-mode">
+          <textarea class="hack-mode password"
             readonly
-            id="password"
+            id=""
             placeholder="Your Secure Password"
             aria-label="Generated Password"
           ></textarea>
+          <label class="switch">
+            <input id="toggle" type="checkbox" />
+            <span class="slider"></span
+          ></label>
+          <label>Turn on for Hacker Movie Style Password Generation!</label>
         </div>
-        <div class="card-footer">
-          <button id="generate" class="btn">Generate Password</button>
+        <div class="card-footer hack-mode">
+          <button id="generate" class="btn hack-mode">Generate Password</button>
         </div>
       </div>
     </div>
