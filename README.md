@@ -47,9 +47,11 @@ I used W3 schools a bit to learn about parsing data, scope, and using variables 
 
 I used https://www.w3schools.com/howto/howto_css_switch.asp to create a toggle switch.
 
-I used this post and its comments to help me through how to loop a setInterval: https://stackoverflow.com/questions/18994891/javascript-setinterval-not-executing-inside-do-while-loop-for-each-iteration
+I used this post and its comments to help me through looping a setInterval using a callback function: https://stackoverflow.com/questions/18994891/javascript-setinterval-not-executing-inside-do-while-loop-for-each-iteration
 
-I used this post to assist me with styling the "hacker-style" formatting: https://css-tricks.com/old-timey-terminal-styling/
+I used this post to assist me with styling the "hacker-style" page formatting: https://css-tricks.com/old-timey-terminal-styling/
+
+Added scanlines to the styling using code from this article: https://dev.to/ekeijl/retro-crt-terminal-screen-in-css-js-4afh.
 ## License
 
 I cannot add a license to this content, as the HTML code, CSS, and a minimal amount of the Javascript were provided to me by my bootcamp instructors.

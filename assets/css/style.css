@@ -118,7 +118,7 @@ button[disabled] {
   overflow: hidden;
 }
 
-
+/* Styles the input to look like a slider switch */
 .switch {
   position: relative;
   display: inline-block;
@@ -126,13 +126,11 @@ button[disabled] {
   height: 34px;
 }
 
-
 .switch input {
   opacity: 0;
   width: 0;
   height: 0;
 }
-
 
 .slider {
   position: absolute;
@@ -142,8 +140,8 @@ button[disabled] {
   right: 0;
   bottom: 0;
   background-color: #ccc;
-  -webkit-transition: .4s;
-  transition: .4s;
+  -webkit-transition: 0.4s;
+  transition: 0.4s;
 }
 
 .slider:before {
@@ -154,8 +152,8 @@ button[disabled] {
   left: 4px;
   bottom: 4px;
   background-color: white;
-  -webkit-transition: .4s;
-  transition: .4s;
+  -webkit-transition: 0.4s;
+  transition: 0.4s;
 }
 
 input:checked + .slider {
@@ -172,7 +170,6 @@ input:checked + .slider:before {
   transform: translateX(26px);
 }
 
-
 .slider.round {
   border-radius: 34px;
 }
@@ -180,57 +177,52 @@ input:checked + .slider:before {
 .slider.round:before {
   border-radius: 50%;
 }
-#redPill{
+
+#redPill {
   font-size: 80%;
 }
+/* the .hacky class gets added to the HTML by javascript when the switch gets flipped, allowing the below CSS to modify the desired elements */
 body.hacky {
-  background-image: radial-gradient(
-    rgba(0, 150, 0, 0.75), black 120%
-  );
+  background-image: radial-gradient(rgba(0, 150, 0, 0.75), black 120%);
 }
 header.hacky {
-display:none;
+  display: none;
 }
 
 .hacky.card {
-  float:left;
+  float: left;
   background-color: transparent;
-  box-shadow:none;
+  box-shadow: none;
 }
 
-.hacky{
-font: 1.3rem Inconsolata, monospace;
+.hacky {
+  font: 1.3rem Inconsolata, monospace;
   color: white;
-background-color: none;
-text-shadow: 0 0 5px #C8C8C8;
+  background-color: none;
+  text-shadow: 0 0 5px #c8c8c8;
 }
 
 .wrapper.hacky {
   padding: 10px;
   margin: 10px;
-  border: solid #03A062 2px;
-height: 96vh;
-  background-image: radial-gradient(
-    rgba(0, 150, 0, 0.75), black 120%
-  );
-
+  border: solid #03a062 2px;
+  height: 96vh;
+  background-image: radial-gradient(rgba(0, 150, 0, 0.75), black 120%);
 }
 
 h2.hide {
-  display:none;
+  display: none;
 }
 
 h2.hacky {
-  display:inherit
+  display: inherit;
 }
-h2.hacky.normie {
-  display:none;
-}
-h1.hacky {
-  display:none;
-}
-.card-header.hacky::after, .card-footer.hacky::before{
-  display:none;
+
+h2.hacky.normie,
+h1.hacky,
+.card-header.hacky::after,
+.card-footer.hacky::before {
+  display: none;
 }
 textarea.hacky.password {
   border: 0px;
@@ -239,30 +231,30 @@ textarea.hacky.password {
   word-break: break-all;
 }
 .hacky::selection {
-  background: #0080FF;
+  background: #0080ff;
   text-shadow: none;
 }
-.btn.hacky{
-  background-color:black;
+.btn.hacky {
+  background-color: black;
   color: white;
 }
 .hacky.wrapper:before {
-    content: " ";
-    display: block;
-    position: absolute;
-    top: 0;
-    left: 0;
-    bottom: 0;
-    right: 0;
-    background: linear-gradient(
-        to bottom,
-        rgba(18, 16, 16, 0) 50%,
-        rgba(0, 0, 0, 0.25) 50%
-    );
-    background-size: 100% 8px;
-    z-index: 2;
-    pointer-events: none;
-    opacity:50%;
+  content: " ";
+  display: block;
+  position: absolute;
+  top: 0;
+  left: 0;
+  bottom: 0;
+  right: 0;
+  background: linear-gradient(
+    to bottom,
+    rgba(18, 16, 16, 0) 50%,
+    rgba(0, 0, 0, 0.25) 50%
+  );
+  background-size: 100% 8px;
+  z-index: 2;
+  pointer-events: none;
+  opacity: 50%;
 }
 @media (max-width: 690px) {
   .btn {

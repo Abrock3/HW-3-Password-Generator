@@ -1,70 +1,19 @@
-// stores button and switch element locations in a const to be referenced later
+// stores element locations in variables to be referenced later
 const generateBtn = document.querySelector("#generate");
 const switchEl = document.querySelector("#toggle");
 const hackyEls = document.querySelectorAll(".hack-mode");
 const labelEl = document.querySelector("#redPill");
 const toggleSwitchColor = document.querySelector(".slider");
-// all selectable characters are stored in four different arrays
-const lowerCaseArray = [
-  "a",
-  "b",
-  "c",
-  "d",
-  "e",
-  "f",
-  "g",
-  "h",
-  "i",
-  "j",
-  "k",
-  "l",
-  "m",
-  "n",
-  "o",
-  "p",
-  "q",
-  "r",
-  "s",
-  "t",
-  "u",
-  "v",
-  "w",
-  "x",
-  "y",
-  "z",
-];
+const passwordText = document.querySelector(".password");
 
-const upperCaseArray = [
-  "A",
-  "B",
-  "C",
-  "D",
-  "E",
-  "F",
-  "G",
-  "H",
-  "I",
-  "J",
-  "K",
-  "L",
-  "M",
-  "N",
-  "O",
-  "P",
-  "Q",
-  "R",
-  "S",
-  "T",
-  "U",
-  "V",
-  "W",
-  "X",
-  "Y",
-  "Z",
-];
-
+// all selectable characters are stored in four different arrays. This code generates arrays of lowerCase and upperCase letters using character codes
+const lowerCaseArray = Array.from({ length: 26 }, (x, i) =>
+  String.fromCharCode(i + "a".charCodeAt())
+);
+const upperCaseArray = Array.from({ length: 26 }, (x, i) =>
+  String.fromCharCode(i + "A".charCodeAt())
+);
 const numbersArray = ["0", "1", "2", "3", "4", "5", "6", "7", "8", "9"];
-
 const specialCharArray = [
   "!",
   '"',
@@ -99,34 +48,36 @@ const specialCharArray = [
   "~",
 ];
 let selectedCharsArray = [];
-let lowerCaseInclude = false;
-let upperCaseInclude = false;
-let numbersInclude = false;
-let specialCharInclude = false;
 let passwordLength = 0;
-let passwordHackerEffect = [];
+let password = [];
 
-// Write password to the .password input
+// uses several functions to generate, randomize, and write a password in the textarea
 function writePassword() {
-  const password = generatePassword();
-  passwordHackerEffect = [];
+  askLength();
+  if (passwordLength === null) {
+    return;
+  }
+  askParameters();
+  genCompletedPassword();
+  randomizePassword();
+  // creates a variable that will store the array that gets displayed during the "hacking" style display
+  let passwordHackerEffect = [];
   for (let i = 0; i < passwordLength; i++) {
     passwordHackerEffect.push(0);
   }
   let currentIndex = 0;
-  let randMilliseconds = 0;
+  let randInterval = 0;
   let iterations = 0;
-  // stores textarea location in a const to be referenced and modified
-  const passwordText = document.querySelector(".password");
+
   if (password !== undefined) {
     // This if decided whether to proceed with hacker-style generation of the password, or standard, boring generation
     if (switchEl.checked === true) {
       // This function uses a callback to loop on itself to create the effect of the computer guessing random characters; I wished to use a loop but it appears you can't do so with a setInterval
-      function hackerEffect(callback) {
+      function hackerEffect(cb) {
         iterations = 0;
         // this math expression takes passwordLength into account to make sure that this effect doesn't take too long to carry out at high password lengths
         // in addition, the interval length shortens as currentIndex increases, which makes the password appear to "solve" faster as it goes along
-        randMilliseconds =
+        randInterval =
           Math.floor(
             Math.random() * 10000 * Math.log(passwordLength) +
               0.5 * Math.log(passwordLength)
@@ -136,15 +87,15 @@ function writePassword() {
         iterations = 0;
         let interval = setInterval(function () {
           iterations++;
-          // this produces the effect of a setInterval nested within a setInterval, with one looping at 20 ms and the other looping at an interval of randMilliseconds
-          if (iterations * 20 >= randMilliseconds) {
+          // this produces the effect of a setInterval nested within a setInterval, with one looping at 20 ms and the other looping at an interval of randInterval
+          if (iterations * 20 >= randInterval) {
             // currentIndex is the index position that is currently getting modified
-            //  after randMilliseconds has passed iterations will increment and the callback function will restart the function assuming the password isn't complete
+            //  after randInterval has passed iterations will increment and the callback function will restart the function assuming the password isn't complete
             passwordHackerEffect[currentIndex] = password[currentIndex];
             passwordText.value = passwordHackerEffect.join("");
             currentIndex++;
             clearInterval(interval);
-            callback();
+            cb();
           } else {
             // creates the effect of a random character appearing at the currentIndex at an interval of 20 milliseconds
             passwordHackerEffect[currentIndex] =
@@ -173,20 +124,6 @@ function writePassword() {
   }
 }
 
-// This function gets called by writePassword(), it contains calls to several other functions, which together create a valid password
-function generatePassword() {
-  askLength();
-  if (passwordLength === null) {
-    return;
-  }
-  askParameters();
-  generateCharsArray();
-  const passwordValidated = generateValidatedPassword();
-
-  // This will join all the characters in passwordValidatedinto a string, and returns it to the writePassword() function, which called the generatePassword() function
-  return passwordValidated;
-}
-
 // this function stores the response to a prompt to var passwordLength and loops back to the start if it doesn't meet our criteria, and quits if they hit cancel
 function askLength() {
   passwordLength = window.prompt(
@@ -195,14 +132,14 @@ function askLength() {
   if (passwordLength === null) {
     return;
   } else {
-    // this turns their response to the length question into an integer or decimal with typeof "number", and trims any invalid characters from it
+    // this turns the user's response to the length question into an integer or decimal with typeof "number", and trims any invalid characters from it
     passwordLength = parseFloat(passwordLength);
   }
   // this loop asks them again and again how many characters, until they input something valid or hit cancel
   do {
     if (
-      passwordLength < 8 ||
-      passwordLength > 128 ||
+      128 < passwordLength ||
+      8 > passwordLength ||
       !Number.isInteger(passwordLength)
     ) {
       passwordLength = window.prompt(
@@ -217,126 +154,73 @@ function askLength() {
     }
     // this while specifies that the loop can't end until the input meets our specifications
   } while (
-    passwordLength < 8 ||
-    passwordLength > 128 ||
+    128 < passwordLength ||
+    8 > passwordLength ||
     !Number.isInteger(passwordLength)
   );
 }
 
 function askParameters() {
-  // This do while loop stores their responses to the parameter questions in 4 different variables, and then verifies in the while that they said yes to at least one parameter
-  do {
-    lowerCaseInclude = window.confirm(
-      "Would you like to include lower case letters in your password?"
-    );
-    upperCaseInclude = window.confirm(
-      "Would you like to include upper case letters in your password?"
-    );
-    numbersInclude = window.confirm(
-      "Would you like to include numbers in your password?"
-    );
-    specialCharInclude = window.confirm(
-      "Would you like to include special characters in your password?"
-    );
-    // this checks to see if they hit yes at least once and if they didn't, notifies them with an alert box before looping them back to the first question
-    if (
-      !lowerCaseInclude &&
-      !upperCaseInclude &&
-      !numbersInclude &&
-      !specialCharInclude
-    ) {
-      window.alert(
-        "You must select at least one type of character to include."
-      );
-    }
-  } while (
-    !lowerCaseInclude &&
-    !upperCaseInclude &&
-    !numbersInclude &&
-    !specialCharInclude
-  );
-}
 
-function generateCharsArray() {
-  // this variable will store all characters of the types the user selected. We set it to [], because we want it to be empty before it starts this process every time
   selectedCharsArray = [];
-  // this function will use the previously established parameters to assemble an array of possible characters
-  function concatArrays(xInclude, xArray) {
-    if (xInclude) {
-      selectedCharsArray = [...selectedCharsArray, ...xArray];
-    }
+  password = [];
+  // using the xArray parameter, this function will append the array listed as an argument to selectedCharsArray
+  // It will also push one character of that type to the password array, to make sure one of each selected type is included
+  function concatArrays(xArray) {
+    selectedCharsArray = [...selectedCharsArray, ...xArray];
+    password[password.length] =
+      xArray[Math.floor(Math.random() * xArray.length)];
   }
-
-  // We can use our previously established variables as arguments in concatArrays() to assemble the array of possible characters to choose from
-  concatArrays(lowerCaseInclude, lowerCaseArray);
-  concatArrays(upperCaseInclude, upperCaseArray);
-  concatArrays(numbersInclude, numbersArray);
-  concatArrays(specialCharInclude, specialCharArray);
-}
-
-function generateValidatedPassword() {
-  let lowerCaseConfirmed = false;
-  let upperCaseConfirmed = false;
-  let numbersConfirmed = false;
-  let specialCharConfirmed = false;
-  let passwordTentative = [];
-
-  // This do while generates a random password from our previously created array using the password length we stored (passwordLength)
-  // then it validates that all selected character types are included and loops back to the start of the do while to make a new password if that condition isn't met
   do {
-    // this must be set to empty before each iteration of this code
-    passwordTentative = [];
-    // this for loop will run a number of times equal to passwordLength, and generates a random character from selectedCharsArray each time
-    // creating a tentative password that we need to validate
-    for (let i = 0; i < passwordLength; i++) {
-      passwordTentative.push(
-        selectedCharsArray[
-          Math.floor(Math.random() * selectedCharsArray.length)
-        ]
-      );
+    if (window.confirm("Would you like lower case letters in your password?")) {
+      concatArrays(lowerCaseArray);
     }
-    // these must be set to false before each iteration of this code
-    lowerCaseConfirmed = false;
-    upperCaseConfirmed = false;
-    numbersConfirmed = false;
-    specialCharConfirmed = false;
 
-    // this for loop will run through each character of passwordTentative, checking to see what types of characters are in the tentative password
-    // and storing whether or not it found that type of character as true or false in a variable
-    function charTypeChecker(xInclude, xArray) {
-      for (let i = 0; i < passwordTentative.length; i++) {
-        if (xInclude) {
-          if (xArray.includes(passwordTentative[i])) {
-            return true;
-          }
-        }
-      }
-      return false;
+    if (window.confirm("Would you like upper case letters in your password?")) {
+      concatArrays(upperCaseArray);
     }
-    // using the xInclude and xArray parameters, we can use arguments within charTypeChecker to test each character type
-    lowerCaseConfirmed = charTypeChecker(lowerCaseInclude, lowerCaseArray);
-    upperCaseConfirmed = charTypeChecker(upperCaseInclude, upperCaseArray);
-    numbersConfirmed = charTypeChecker(numbersInclude, numbersArray);
-    specialCharConfirmed = charTypeChecker(
-      specialCharInclude,
-      specialCharArray
-    );
 
-    // this while validates that there is at least one of each user-selected character type in passwordTentative; and loops back to generating a random password if not
-  } while (
-    !(lowerCaseConfirmed === lowerCaseInclude) ||
-    !(upperCaseConfirmed === upperCaseInclude) ||
-    !(numbersConfirmed === numbersInclude) ||
-    !(specialCharConfirmed === specialCharInclude)
-  );
-  // returns the value of the validated password back to the generatePassword() function
-  return passwordTentative;
+    if (window.confirm("Would you like numbers in your password?")) {
+      concatArrays(numbersArray);
+    }
+
+    if (window.confirm("Would you like special characters in your password?")) {
+      concatArrays(specialCharArray);
+    }
+
+    // this checks to see if the user hit yes at least once and if they didn't, notifies them with an alert box before looping them back to the first question
+    if (selectedCharsArray.length === 0) {
+      window.alert("You must select at least one type of character.");
+    }
+  } while (selectedCharsArray.length === 0);
 }
 
-// Add event listener to generate button and switch
+function genCompletedPassword() {
+  // this for loop will fill the rest of the password array with randomized characters from selectedCharsArray, stopping when password is the same length the user desires
+  for (let i = password.length; i < passwordLength; i++) {
+    password.push(
+      selectedCharsArray[Math.floor(Math.random() * selectedCharsArray.length)]
+    );
+  }
+}
+
+function randomizePassword() {
+  let randomIndex, tempChar;
+  // This function uses the fisher-yates shuffle to shuffle this array
+  for (let i = 0; i < password.length; i++) {
+    randomIndex = Math.floor(Math.random() * password.length);
+
+    tempChar = password[i];
+    password[i] = password[randomIndex];
+    password[randomIndex] = tempChar;
+  }
+}
+// Adds event listener to generate button and switch
 generateBtn.addEventListener("click", writePassword);
 switchEl.addEventListener("click", function () {
   for (let i = 0; i < hackyEls.length; i++) {
+    // this for loop will cycle through elements and add and remove a class to change CSS styling
+    // this will also change HTML content based on the state of the switch
     if (hackyEls[i].classList.contains("hacky")) {
       hackyEls[i].classList.remove("hacky");
       generateBtn.innerHTML = "Generate Password";
