@@ -31,7 +31,7 @@ THEN the password is either displayed in an alert or written to the page
 
 The HTML and CSS code were all provided to me; but I wrote almost all of the javascript from scratch, attempting to match the functionality that was demonstrated by the instructors in a short gif. 
 
-Matching that gif, I used prompt windows to gather information about the user's preferences, then validated their responses to make sure they met our criteria. Then those responses are used to randomly generate a new password, which then goes through a loop to make sure all criteria are met. Once the password is generated and validatedgit  it is passed to another function, which presents the finalized password to the user. 
+Matching that gif, I used prompt windows to gather information about the user's preferences, then validated their responses to make sure they met our criteria. Then those responses are used to randomly generate a new password, which is then shuffled to ensure it's random. Once the password is generated it is passed to another function, which presents the finalized password to the user, either instantly, or by using a hacker-movie inspired display. 
 
 ## Usage
 
