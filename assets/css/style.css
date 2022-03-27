@@ -206,7 +206,7 @@ header.hacky {
   padding: 10px;
   margin: 10px;
   border: solid #03a062 2px;
-  height: 96vh;
+  height: calc(100% - 20px);
   background-image: radial-gradient(rgba(0, 150, 0, 0.75), black 120%);
 }
 
