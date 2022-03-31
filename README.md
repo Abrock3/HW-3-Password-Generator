@@ -10,7 +10,7 @@ I WANT to randomly generate a password that meets certain criteria
 SO THAT I can create a strong password that provides greater security
 ```
 
-I was asked to use the following list of acceptance criteria to create a portfolio page and satisfactorily resolve the user story:
+I was asked to use the following list of acceptance criteria to create a password generator and satisfactorily resolve the user story:
 
 GIVEN I need a new, secure password
 WHEN I click the button to generate a password
@@ -29,13 +29,13 @@ WHEN the password is generated
 THEN the password is either displayed in an alert or written to the page
 
 
-The HTML and CSS code were all provided to me; but I wrote almost all of the javascript from scratch, attempting to match the functionality that was demonstrated by the instructors in a short gif. 
+The basic HTML and CSS code were all provided to me (aside from everything related to the "hacker style" interface); but I wrote almost all of the javascript from scratch, attempting to match the functionality that was demonstrated by the instructors in a short gif.
 
-Matching that gif, I used prompt windows to gather information about the user's preferences, then validated their responses to make sure they met our criteria. Then those responses are used to randomly generate a new password, which is then shuffled to ensure it's random. Once the password is generated it is passed to another function, which presents the finalized password to the user, either instantly, or by using a hacker-movie inspired display. 
+Matching that gif, I used prompt windows to gather information about the user's preferences, then validated their responses to make sure they met our criteria. Then those responses are used to randomly generate a new password, which is then shuffled to ensure it's random. Once the password is generated it is passed to another function, which presents the finalized password to the user, either instantly or optionally by using a hacker-movie inspired display. 
 
 ## Usage
 
-Here's a link to the deployed application: https://abrock3.github.io/HW-3-Password-Generator/
+Here's a link to the deployed webpage: https://abrock3.github.io/HW-3-Password-Generator/
 
 ![Screenshot](./assets/images/screenshot.jpg?raw=true "Screenshot")
 
