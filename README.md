@@ -39,6 +39,8 @@ Here's a link to the deployed webpage: https://abrock3.github.io/HW-3-Password-G
 
 ![Screenshot](./assets/images/screenshot.jpg?raw=true "Screenshot")
 
+![Screenshot](./assets/images/screenshot2.jpg?raw=true "Screenshot")
+
 ## Credits
 
 The HTML, CSS, and a minimal amount of the javascript were provided by Trey Eckels and the instructional team at the Georgia Tech full stack coding boot camp.
@@ -52,6 +54,3 @@ I used this post and its comments to help me through looping a setInterval using
 I used this post to assist me with styling the "hacker-style" page formatting: https://css-tricks.com/old-timey-terminal-styling/
 
 Added scanlines to the styling using code from this article: https://dev.to/ekeijl/retro-crt-terminal-screen-in-css-js-4afh.
-## License
-
-I cannot add a license to this content, as the HTML code, CSS, and a minimal amount of the Javascript were provided to me by my bootcamp instructors.

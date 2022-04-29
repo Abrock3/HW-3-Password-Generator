@@ -72,7 +72,7 @@ function writePassword() {
   if (password !== undefined) {
     // This if decided whether to proceed with hacker-style generation of the password, or standard, boring generation
     if (switchEl.checked === true) {
-      // This function uses a callback to loop on itself to create the effect of the computer guessing random characters; I wished to use a loop but it appears you can't do so with a setInterval
+      // This function uses a callback to loop on itself to create the effect of the app guessing random characters until it "solves"
       function hackerEffect(cb) {
         iterations = 0;
         // this math expression takes passwordLength into account to make sure that this effect doesn't take too long to carry out at high password lengths
@@ -113,7 +113,7 @@ function writePassword() {
           hackerEffect(cbTarget);
         } else {
           passwordText.value = password.join("");
-          window.alert("ACCESS GRANTED...TO A SECURE PASSWORD");
+          window.alert("WE'RE IN. ACCESS GRANTED...TO A SECURE PASSWORD");
           return;
         }
       }
