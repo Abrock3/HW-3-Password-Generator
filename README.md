@@ -54,3 +54,9 @@ I used this post and its comments to help me through looping a setInterval using
 I used this post to assist me with styling the "hacker-style" page formatting: https://css-tricks.com/old-timey-terminal-styling/
 
 Added scanlines to the styling using code from this article: https://dev.to/ekeijl/retro-crt-terminal-screen-in-css-js-4afh.
+
+## Contact Info
+
+Telephone: 727-400-9280
+Email: a.paulbrock@gmail.com
+linkedin: https://www.linkedin.com/in/adam-p-brock/
