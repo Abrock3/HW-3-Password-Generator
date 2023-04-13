@@ -72,25 +72,22 @@ function writePassword() {
   if (password !== undefined) {
     // This if decided whether to proceed with hacker-style generation of the password, or standard, boring generation
     if (switchEl.checked === true) {
+      generateBtn.disabled = true;
       // This function uses a callback to loop on itself to create the effect of the app guessing random characters until it "solves"
       function hackerEffect(cb) {
         iterations = 0;
         // this math expression takes passwordLength into account to make sure that this effect doesn't take too long to carry out at high password lengths
         // in addition, the interval length shortens as currentIndex increases, which makes the password appear to "solve" faster as it goes along
         randInterval =
-          Math.floor(
-            Math.random() * 10000 * Math.log(passwordLength) +
-              0.5 * Math.log(passwordLength)
-          ) /
-          passwordLength /
-          (((passwordLength + currentIndex * 4) * 0.5) / passwordLength);
+          (Math.floor(Math.random() * 10000 + 0.5) * Math.log(passwordLength)) /
+          (passwordLength / 2 + currentIndex * 2);
         iterations = 0;
         let interval = setInterval(function () {
           iterations++;
           // this produces the effect of a setInterval nested within a setInterval, with one looping at 20 ms and the other looping at an interval of randInterval
           if (iterations * 20 >= randInterval) {
             // currentIndex is the index position that is currently getting modified
-            //  after randInterval has passed iterations will increment and the callback function will restart the function assuming the password isn't complete
+            //  after randInterval has passed currentIndex will increment and the callback function will restart the function assuming the password isn't complete
             passwordHackerEffect[currentIndex] = password[currentIndex];
             passwordText.value = passwordHackerEffect.join("");
             currentIndex++;
@@ -113,7 +110,12 @@ function writePassword() {
           hackerEffect(cbTarget);
         } else {
           passwordText.value = password.join("");
-          window.alert("WE'RE IN. ACCESS GRANTED...TO A SECURE PASSWORD");
+          // I wrapped this alert in a setTimeout to allow the previous line time to take effect;
+          // otherwise the alert displays before the final password change
+          setTimeout(() => {
+            window.alert("WE'RE IN. ACCESS GRANTED...TO A SECURE PASSWORD");
+          }, 20);
+          generateBtn.disabled = false;
           return;
         }
       }
@@ -161,7 +163,6 @@ function askLength() {
 }
 
 function askParameters() {
-
   selectedCharsArray = [];
   password = [];
   // using the xArray parameter, this function will append the array listed as an argument to selectedCharsArray
